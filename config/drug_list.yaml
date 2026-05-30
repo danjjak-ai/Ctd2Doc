@@ -1,0 +1,18 @@
+# 타겟 의약품 목록 정의
+# Japic Code를 Key로 설정하며, static_list에 정의된 약품들을 기본 타겟으로 하고,
+# PMDA 카테고리 크롤링 모드를 활성화할 수 있도록 구성합니다.
+
+crawler:
+  mode: "both"  # "static" (지정 리스트만), "auto" (자동 탐색), "both" (둘 다)
+  auto_categories:
+    - "http://www.pmda.go.jp/PmdaSearch/iyakuSearch/" # 예시 PMDA 의약품 검색 메인 카테고리 URL
+
+static_list:
+  - japic_code: "10023"
+    name_ja: "薬品A"
+    pmda_url: "https://www.pmda.go.jp/PmdaSearch/iyakuDetail/GeneralList/10023"
+    radar_url: "https://www.rad-ar.or.jp/kusuri/search/detail/10023"
+  - japic_code: "10024"
+    name_ja: "薬品B"
+    pmda_url: "https://www.pmda.go.jp/PmdaSearch/iyakuDetail/GeneralList/10024"
+    radar_url: "https://www.rad-ar.or.jp/kusuri/search/detail/10024"
