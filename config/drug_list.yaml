@@ -16,3 +16,7 @@ static_list:
     name_ja: "ファビハルタ"
     pmda_url: "https://www.pmda.go.jp/PmdaSearch/iyakuDetail/GeneralList/520033577"
     radar_url: "https://www.rad-ar.or.jp/kusuri/search/detail/520033577"
+  - japic_code: "4291043"
+    name_ja: "イムブルビカ"
+    pmda_url: "https://www.pmda.go.jp/PmdaSearch/iyakuDetail/GeneralList/4291043"
+    radar_url: "https://www.rad-ar.or.jp/siori/search/result?n=42369"

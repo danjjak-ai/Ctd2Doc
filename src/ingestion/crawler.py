@@ -12,8 +12,17 @@ class CrawlerAgent:
         self.settings = settings
         self.drug_list_path = drug_list_path
         self.headers = {
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+            "Accept-Language": "ja,en-US;q=0.7,en;q=0.3",
         }
+        self.session = requests.Session()
+        self.session.headers.update(self.headers)
+        # Establish session cookies by visiting search page first
+        try:
+            self.session.get("https://www.pmda.go.jp/PmdaSearch/iyakuSearch/", timeout=10)
+        except Exception as e:
+            print(f"[Warning] Failed to pre-visit PMDA search page: {e}")
         self.load_drug_list()
 
     def load_drug_list(self):
@@ -25,7 +34,7 @@ class CrawlerAgent:
 
     def fetch_page(self, url: str) -> str:
         """Fetches a page, automatically handling Japanese character encoding like Shift-JIS or EUC-JP."""
-        response = requests.get(url, headers=self.headers, timeout=15)
+        response = self.session.get(url, timeout=15)
         response.raise_for_status()
         
         # Detect encoding if not UTF-8
@@ -51,16 +60,17 @@ class CrawlerAgent:
                 text = a_tag.get_text()
                 
                 # PMDA structure matching
-                if "ctd" in href.lower() or "common technical document" in text.lower():
+                # CTD can be labeled as Shinsa Houkokusho (審査報告書) or Houkokusho (報告書) on PMDA
+                if "ctd" in href.lower() or "common technical document" in text.lower() or "審査報告" in text or "報告書" in text:
                     urls["ctd"] = href
-                elif "if" in href.lower() or "interview" in text.lower() or "インタビューフォーム" in text:
+                elif "if" in href.lower() or "if" in text.lower() or "interview" in href.lower() or "interview" in text.lower() or "インタビューフォーム" in text:
                     urls["if"] = href
             
             # Fallback patterns if not explicitly found in text
             if not urls["ctd"]:
                 pdf_links = [a["href"] for a in soup.find_all("a", href=True) if a["href"].endswith(".pdf")]
                 for link in pdf_links:
-                    if "ctd" in link.lower():
+                    if "ctd" in link.lower() or "rmp" not in link.lower(): # Fallback to first non-RMP PDF as CTD if possible
                         urls["ctd"] = link
                         break
         except Exception as e:
@@ -90,7 +100,7 @@ class CrawlerAgent:
         os.makedirs(os.path.dirname(dest_path), exist_ok=True)
         time.sleep(2.0) # Rate limiting as required
         
-        response = requests.get(url, headers=self.headers, stream=True, timeout=30)
+        response = self.session.get(url, stream=True, timeout=30)
         response.raise_for_status()
         with open(dest_path, "wb") as f:
             for chunk in response.iter_content(chunk_size=8192):
