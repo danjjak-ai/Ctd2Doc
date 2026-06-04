@@ -23,6 +23,8 @@ class CrawlerAgent:
             self.session.get("https://www.pmda.go.jp/PmdaSearch/iyakuSearch/", timeout=10)
         except Exception as e:
             print(f"[Warning] Failed to pre-visit PMDA search page: {e}")
+        from src.ingestion.master_downloader import MasterDownloader
+        self.master_downloader = MasterDownloader(self.drug_list_path)
         self.load_drug_list()
 
     def load_drug_list(self):
@@ -156,6 +158,11 @@ class CrawlerAgent:
 
     def collect(self) -> List[Dict[str, Any]]:
         """Main ingress collection loop. Downloads CTD, Package Insert, Patient Guide, IF, Siori, RMP, RMP Materials."""
+        try:
+            self.master_downloader.download()
+        except Exception as e:
+            print(f"[Warning] Master download failed or skipped: {e}")
+
         targets = []
         if self.mode in ["static", "both"]:
             targets.extend(self.static_drugs)
@@ -165,10 +172,22 @@ class CrawlerAgent:
         collected_results = []
         for drug in targets:
             code = drug["japic_code"]
+            yj_code = drug.get("yj_code")
+            if not yj_code:
+                try:
+                    y_txt_path = os.path.join(self.master_downloader.download_dir, "y.txt")
+                    records = self.master_downloader.parse_master(y_txt_path)
+                    for r in records:
+                        if r["japic_code"] == code:
+                            yj_code = r["yj_code"]
+                            break
+                except Exception as ex:
+                    print(f"[Warning] Failed to resolve yj_code for japic_code {code}: {ex}")
+
             raw_dir = os.path.join(self.settings.paths.data_raw, f"JapicCode_{code}")
             os.makedirs(raw_dir, exist_ok=True)
             
-            print(f"[Crawler] Processing Japic Code: {code}")
+            print(f"[Crawler] Processing Japic Code: {code} (YJ Code: {yj_code})")
             
             # Crawl all PMDA detail URLs
             doc_urls = self.parse_pmda_details(code, drug["pmda_url"])
@@ -264,6 +283,7 @@ class CrawlerAgent:
                     print(f"  [Error] Downloading RMP Material failed ({url}): {e}")
             
             collected_results.append({
+                "yj_code": yj_code,
                 "japic_code": code,
                 "name": drug.get("name_ja", "Unknown"),
                 "ctd_pdf": downloaded["ctd_pdf"][0] if downloaded["ctd_pdf"] else None,
