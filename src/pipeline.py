@@ -49,7 +49,7 @@ class AutonomousPipeline:
         print(f"\n=== [Pipeline] Starting iteration {iteration} for drug: {name} ({code}) ===")
 
         # Step 1: Download raw documents
-        raw_results = self.crawler.collect()
+        raw_results = self.crawler.collect([drug])
         drug_data = next((d for d in raw_results if d["japic_code"] == code), None)
         if not drug_data:
             raise ValueError(f"Failed to crawl/locate drug data for code: {code}")
