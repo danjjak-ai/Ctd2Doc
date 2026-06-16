@@ -68,7 +68,7 @@ class ScoringSystem:
         history = self.get_drug_history(japic_code) if japic_code else self.get_history()
 
         if not history:
-            return {"scores": [], "improvement": 0, "best": 0, "worst": 0, "avg": 0, "improving": False}
+            return {"scores": [], "improvement": 0, "best": 0, "worst": 0, "avg": 0, "improving": False, "total_iterations": 0}
 
         scores = [h["total_score"] for h in history]
 
