@@ -144,13 +144,13 @@ class AutonomousPipeline:
 
             # 조기 종료 체크 (정체 감지)
             if self.orchestrator.detect_plateau():
-                print(f"\n  [Pipeline] ⚠ Plateau detected! "
+                print(f"\n  [Pipeline] [Warning] Plateau detected! "
                       f"Reverting to best adapter and moving to next drug.")
                 if self.orchestrator.best_adapter_path:
                     self.generator.reload_adapter(self.orchestrator.best_adapter_path)
                 early_stop = True
         else:
-            print(f"\n  [Pipeline] ✅ Goal achieved for {name}! "
+            print(f"\n  [Pipeline] [Success] Goal achieved for {name}! "
                   f"Score: {current_score} >= {target_score}")
 
         # Step 8: 생성 결과 저장
@@ -280,7 +280,7 @@ class AutonomousPipeline:
         print(f"\n  {'Drug':<20} {'Best Score':<12} {'Iters':<8} {'Status'}")
         print(f"  {'─'*55}")
         for r in results:
-            status = "✅ Target Met" if r["target_met"] else "⚠ Below Target"
+            status = "[Met] Target Met" if r["target_met"] else "[Below] Below Target"
             print(f"  {r['drug']:<20} {r['best_score']:<12} {r['iterations']:<8} {status}")
 
         met_count = sum(1 for r in results if r["target_met"])

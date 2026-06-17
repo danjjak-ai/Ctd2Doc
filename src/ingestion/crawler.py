@@ -171,7 +171,7 @@ class CrawlerAgent:
         if targets is None:
             # Load the drugs directly from the master file (y.txt)
             records = self.master_downloader.parse_master(y_txt_path)
-            target_records = records[:10]
+            target_records = records
             print(f"[Crawler] Loaded {len(target_records)} target drugs directly from master file {y_txt_path}")
             
             targets = []

@@ -96,7 +96,7 @@ class ScoringSystem:
         print(f"  Iterations: {trend['total_iterations']}")
         print(f"  Best: {trend['best']} | Worst: {trend['worst']} | Avg: {trend['avg']}")
         print(f"  Improvement: {trend['improvement']:+d}")
-        print(f"  Trend: {'📈 Improving' if trend['improving'] else '📉 Stagnating'}")
+        print(f"  Trend: {'Improving' if trend['improving'] else 'Stagnating'}")
         if trend["scores"]:
             print(f"  Score History: {' → '.join(str(s) for s in trend['scores'])}")
         print()

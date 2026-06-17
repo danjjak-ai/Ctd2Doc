@@ -68,7 +68,7 @@ def run_pipeline(args):
 
     # Dry-run 모드: device를 CPU로 강제 전환
     if args.dry_run:
-        print("\n🔧 DRY-RUN MODE: Forcing CPU (mock) mode for pipeline validation.\n")
+        print("\n[DRY-RUN MODE] Forcing CPU (mock) mode for pipeline validation.\n")
         settings.model.device = "cpu"
 
     # Max iterations 오버라이드
