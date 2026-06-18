@@ -1,0 +1,2 @@
+{"timestamp": 1781789739.7000942, "iteration": 1, "score_before_training": 70, "learning_rate": 0.0001, "epochs": 3, "adapter_path": "outputs/test_checkpoints\\gemma-4-12b-qlora-iter-1", "consecutive_failures": 2, "plateau_count": 0, "best_score": 70}
+{"timestamp": 1781789740.190492, "iteration": 1, "score_before_training": 70, "learning_rate": 0.0001, "epochs": 3, "adapter_path": "outputs/test_checkpoints\\gemma-4-12b-qlora-iter-1", "consecutive_failures": 2, "plateau_count": 0, "best_score": 70}

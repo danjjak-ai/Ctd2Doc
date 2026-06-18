@@ -4,6 +4,23 @@ from typing import Any, Dict, List, Optional
 
 # 지원 모델 프리셋 정의
 MODEL_PRESETS: Dict[str, Dict[str, Any]] = {
+    "google/gemma-4-12b-it": {
+        "family": "gemma4",
+        "display_name": "Gemma 4 12B-IT",
+        "params_billions": 12,
+        "max_context_length": 131072,  # 128K
+        "recommended_seq_length": 8192,
+        "estimated_vram_4bit_mb": 9500,
+        "estimated_vram_qlora_mb": 28000,
+        "lora_target_modules": [
+            "q_proj", "k_proj", "v_proj", "o_proj",
+            "gate_proj", "up_proj", "down_proj",
+        ],
+        "supports_system_prompt": True,
+        "chat_template_method": "apply_chat_template",
+        "use_unsloth": True,
+        "eos_token": "<end_of_turn>",
+    },
     "google/gemma-4-E4B-it": {
         "family": "gemma4",
         "display_name": "Gemma 4 E4B-IT",

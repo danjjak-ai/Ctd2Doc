@@ -25,6 +25,6 @@
 - **솔루션:** **LLM-as-a-Judge (Gemma 2 27B-IT 또는 GPT-4o-mini API)** 시스템을 도입하여 3대 지표(수치 정확성, 포맷 준수율, 가독성/언어 뉘앙스)를 정량 점수화(0~100)하여 보상 스코어로 환산.
 
 ## 3. GPU 자원 최적화 (Google Colab 환경)
-- **모델:** `google/gemma-2-9b-it` (영어/일본어 도메인 성능 최상위)
+- **모델:** `google/gemma-4-12b-it` (영어/일본어 도메인 성능 최상위)
 - **구동 환경:** Colab Pro (A100 40GB VRAM 또는 L4 24GB VRAM)
-- **메모리 절약:** `Unsloth` 프레임워크를 이용한 4-bit QLoRA 적용. 맥락 수용 길이(Context Window)를 4,096까지 확보하여 CTD 청크 다량 주입 가능.
+- **메모리 절약:** `Unsloth` 프레임워크를 이용한 4-bit QLoRA 적용. 맥락 수용 길이(Context Window)를 8,192까지 확보하여 CTD 청크 다량 주입 가능.

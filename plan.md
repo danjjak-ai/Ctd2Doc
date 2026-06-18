@@ -47,7 +47,7 @@ Vector DB: 가볍고 파일 기반 제어가 가능한 Chroma 또는 FAISS 사�
 Retriever: 입력 쿼리(예: "부작용 및 임상시험 결과")에 매칭되는 CTD 마크다운 청크 상위 5개 추출하여 LLM Context Window에 바인딩.
 
 단계 3: 자율 피드백 평가 및 데이터 추가 루프 설계
-Initial State: 학습되지 않은 순수 Gemma-2-9b-it 모델에 RAG를 붙여 샘플 약품 A, B의 결과를 생성함.
+Initial State: 학습되지 않은 순수 Gemma-4-12b-it 모델에 RAG를 붙여 샘플 약품 A, B의 결과를 생성함.
 
 Evaluation: Judge Agent가 스코어 산출 (Target Score: 85점).
 
@@ -59,7 +59,7 @@ Iteration: 다음 약품 C, D 데이터를 파이프라인에 주입하여 점�
 Python
 def autonomous_pipeline_loop(target_score=85):
     drug_list = ["Drug_A", "Drug_B", "Drug_C", "Drug_D"]
-    active_model = "google/gemma-2-9b-it"
+    active_model = "google/gemma-4-12b-it"
     
     for drug in drug_list:
         # 1. 문서 다운로드 및 전처리

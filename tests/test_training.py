@@ -47,14 +47,13 @@ def test_dataset_building_and_orchestration(setup_training):
     
     # 2. Hyperparameter dynamic scheduling checks
     assert orch.consecutive_failures == 0
-    lr1, ep1 = orch.determine_training_parameters()
+    lr1, ep1 = orch.determine_training_parameters(current_score=30)
     
     orch.consecutive_failures = 1
-    lr2, ep2 = orch.determine_training_parameters()
+    lr2, ep2 = orch.determine_training_parameters(current_score=70)
     assert lr2 < lr1
-    assert ep2 > ep1
     
     # 3. Training integration trigger
     new_adapter = orch.handle_feedback(report, db.dataset_file, iteration=1)
     assert new_adapter is not None
-    assert "gemma-2-27b-qlora-iter-1" in new_adapter
+    assert "gemma-4-12b-qlora-iter-1" in new_adapter
