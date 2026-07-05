@@ -158,7 +158,7 @@ if history:
             st.markdown("**Ground Truth Document (Reference IF)**")
             st.text_area("GT Doc", gt_content, height=300, disabled=True)
         with c2:
-            st.markdown("**Generated Document (Gemma 2 27B output)**")
+            st.markdown("**Generated Document (Gemma 4 output)**")
             st.text_area("Gen Doc", gen_content, height=300, disabled=True)
             
         # Diff View

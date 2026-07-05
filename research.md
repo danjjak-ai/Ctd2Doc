@@ -1,4 +1,4 @@
-# Research: Multilingual Medical Document Fine-Tuning with Gemma 2
+# Research: Multilingual Medical Document Fine-Tuning with Gemma 4
 
 ## 1. 도메인 및 데이터 소스 분석
 ### 1.1 CTD (Common Technical Document)
@@ -22,7 +22,7 @@
 
 ### 2.3 자율 피드백 루프 (Autonomous Feedback Loop)
 - **현상:** 정답 문서와 생성 문서 간의 단순 BLEU/ROUGE 스코어는 의료 문서의 '정확성'을 대변하지 못함. (용어 변경이나 의미 왜곡을 잡아내지 못함)
-- **솔루션:** **LLM-as-a-Judge (Gemma 2 27B-IT 또는 GPT-4o-mini API)** 시스템을 도입하여 3대 지표(수치 정확성, 포맷 준수율, 가독성/언어 뉘앙스)를 정량 점수화(0~100)하여 보상 스코어로 환산.
+- **솔루션:** **LLM-as-a-Judge (Gemma 4 12B-IT 또는 GPT-4o-mini API)** 시스템을 도입하여 3대 지표(수치 정확성, 포맷 준수율, 가독성/언어 뉘앙스)를 정량 점수화(0~100)하여 보상 스코어로 환산.
 
 ## 3. GPU 자원 최적화 (Google Colab 환경)
 - **모델:** `google/gemma-4-12b-it` (영어/일본어 도메인 성능 최상위)

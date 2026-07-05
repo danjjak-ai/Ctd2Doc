@@ -44,7 +44,7 @@ uv pip install -e .
 #### 1) 전역 설정 (`config/settings.yaml`)
 모델 설정, 경로 및 파인튜닝 파라미터를 정의합니다.
 * **`pipeline`**: 목표 점수(`target_score`) 및 최대 파인튜닝 시도 횟수(`max_iterations`)를 지정합니다.
-* **`model`**: 추론/평가에 사용할 베이스 모델(`google/gemma-2-27b-it`) 및 임베딩 모델을 지정합니다.
+* **`model`**: 추론/평가에 사용할 베이스 모델(`google/gemma-4-12b-it`) 및 임베딩 모델을 지정합니다.
 * **`paths`**: 데이터 수집, 파싱, 인덱싱, 저장 경로를 지정합니다.
 * **`training`**: QLoRA 파인튜닝 하이퍼파라미터(Learning Rate, Epoch, Batch Size 등)를 조절합니다.
 
